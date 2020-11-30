@@ -1,14 +1,15 @@
 import React from 'react'
 import logo from './logo.svg';
 import './App.css';
-// import {Router} from 
+import {
+  BrowserRouter as Router,
+  Route
+} from 'react-router-dom'
 
 class App extends React.Component {
 
   state = {
-
     api: []
-
   }
 
   render() {

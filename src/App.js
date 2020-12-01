@@ -5,6 +5,7 @@ import {
 //   Route
 } from 'react-router-dom'
 // import NavBar from './Containers/NavBar'
+import UserContainer from './Containers/UserContainer'
 
 class App extends React.Component {
 
@@ -25,6 +26,7 @@ class App extends React.Component {
     return (
       <Router>
         <div>
+          <UserContainer api={this.state.api} />
           {/* <NavBar /> */}
           {/*<Route exact path="/" render={/*<Home />} /> */ }
           { /*<Route path='/movies' render={routerProps => <MoviesPage {...routerProps} movies={this.state.movies}/> } /> */ }

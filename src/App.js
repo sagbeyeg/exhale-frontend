@@ -1,10 +1,10 @@
 import React from 'react'
-import logo from './logo.svg';
 import './App.css';
 import {
   BrowserRouter as Router,
-  Route
+//   Route
 } from 'react-router-dom'
+// import NavBar from './Containers/NavBar'
 
 class App extends React.Component {
 
@@ -12,24 +12,24 @@ class App extends React.Component {
     api: []
   }
 
+  componentDidMount = () => {
+    fetch("http://localhost:3000/api/v1/users")
+    .then(resp => resp.json())
+    .then(users => {
+      this.setState({api: users}, () => console.log(this.state.api))
+    })
+    //.catch(alert("It didn't work... sorry!"))
+  }
+
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+      <Router>
+        <div>
+          {/* <NavBar /> */}
+          {/*<Route exact path="/" render={/*<Home />} /> */ }
+          { /*<Route path='/movies' render={routerProps => <MoviesPage {...routerProps} movies={this.state.movies}/> } /> */ }
+        </div>
+      </Router>
     );
 
   }

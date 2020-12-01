@@ -2,9 +2,12 @@ import React from 'react'
 import './App.css';
 import {
   BrowserRouter as Router,
-//   Route
+  Route
 } from 'react-router-dom'
-// import NavBar from './Containers/NavBar'
+import Home from './Components/Home'
+import About from './Components/About'
+import Login from './Components/Login'
+import NavBar from './Containers/NavBar'
 import UserContainer from './Containers/UserContainer'
 
 class App extends React.Component {
@@ -26,7 +29,11 @@ class App extends React.Component {
     return (
       <Router>
         <div>
-          <UserContainer api={this.state.api} />
+          {/* <UserContainer api={this.state.api} /> */}
+          <NavBar />
+          <Route exact path="/" component={Home} />
+          <Route exact path="/about" component={About}  />
+          <Route exact path="/login" component={Login} />
           {/* <NavBar /> */}
           {/*<Route exact path="/" render={/*<Home />} /> */ }
           { /*<Route path='/movies' render={routerProps => <MoviesPage {...routerProps} movies={this.state.movies}/> } /> */ }

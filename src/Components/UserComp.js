@@ -26,11 +26,11 @@ export default class UserComp extends Component {
                   <h1>{user.name}</h1>
                   <p>{user.email_address}</p>
               <h3>Tasks</h3>
-                {user.tasks.map((t,idx) => { 
+                {/* {user.tasks.map((t,idx) => {render 
                   <li key={idx}>
                     <strong>{t.title}</strong>(<em>{t.status}</em>)-{t.content}
                   </li>
-                })}
+                })} */}
             </div>
         )
     }

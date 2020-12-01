@@ -2,39 +2,108 @@ import React from 'react'
 import './App.css';
 import {
   BrowserRouter as Router,
-  Route
+  Route,
+  Redirect
 } from 'react-router-dom'
 import Home from './Components/Home'
 import About from './Components/About'
 import Login from './Components/Login'
 import NavBar from './Containers/NavBar'
-import UserContainer from './Containers/UserContainer'
+import UserComp from './Components/UserComp'
 
 class App extends React.Component {
 
   state = {
-    api: []
+    email: '',
+    password: '',
+    user: {},
+    isLoggedIn: false
   }
 
   componentDidMount = () => {
-    fetch("http://localhost:3000/api/v1/users")
-    .then(resp => resp.json())
-    .then(users => {
-      this.setState({api: users}, () => console.log(this.state.api))
-    })
-    //.catch(alert("It didn't work... sorry!"))
+    const token = localStorage.getItem("token")
+    console.log(token)
+    
+    if (token) {
+      fetch('http://localhost:3000/api/v1/profile', {
+        method: "GET",
+        headers: { Authorization: `Bearer ${token}`}
+      })
+      .then(resp=> resp.json())
+      .then(data => this.setState({isLoggedIn: true, user: data.user}))
+    } else {
+      this.handleLogout();
+    }
   }
 
+  loginClickHandler = (e) => {
+    this.setState({
+      [e.target.name]: e.target.value
+    }, 
+    // () => console.log(this.state.email, this.state.password)
+    )
+  }
+
+  loginSubmitHandler = () => {
+    const configObj = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Accepts": "application/json"
+      },
+      body: JSON.stringify({
+        email_address: this.state.email,
+        password: this.state.password
+      })
+    }
+
+    fetch("http://localhost:3000/api/v1/login", configObj)
+    .then(resp => resp.json())
+    .then(user => {
+      localStorage.setItem("token", user.jwt)
+      this.handleLogin(user)
+    })
+  }
+
+  handleLogin = (data) => {
+    this.setState({
+      isLoggedIn: true,
+      user: data.user
+    })
+    return <Redirect to='/profile'/>
+  }
+
+  handleLogout = () => {
+    this.setState({
+      isLoggedIn: false,
+      user: {}
+    })
+    localStorage.removeItem("token");
+    // <Redirect to='/login'/>
+    // this.props.history.push(`/login`)
+  }
+
+  renderUser = () => {
+  }
+  
+  
   render() {
+    console.log(this.state)
     return (
       <Router>
         <div>
           {/* <UserContainer api={this.state.api} /> */}
-          <NavBar />
+          <NavBar loggedIn={this.state.isLoggedIn} handleLogout={this.handleLogout}/>
           <Route exact path="/" component={Home} />
           <Route exact path="/about" component={About}  />
-          <Route exact path="/login" component={Login} />
-          {/* <NavBar /> */}
+          <Route exact path="/login" render={() => this.state.isLoggedIn? <Redirect to='/profile'/> : <Login loginClickHandler={this.loginClickHandler} loginSubmitHandler={this.loginSubmitHandler} />} />
+          {this.state.isLoggedIn?
+          <div>
+          <Route exact path="/profile" render={() => <UserComp user={this.state.user} /> } />
+            {/* <button onClick={this.renderUser}>Profile</button> */}
+            {/* <Route exact path="/about" component={About}  /> */}
+          </div>
+          : <Redirect to='/login'/> }
           {/*<Route exact path="/" render={/*<Home />} /> */ }
           { /*<Route path='/movies' render={routerProps => <MoviesPage {...routerProps} movies={this.state.movies}/> } /> */ }
         </div>

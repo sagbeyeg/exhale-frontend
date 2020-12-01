@@ -5,7 +5,7 @@ class About extends React.Component {
     return (
       <div>
         <h1>About Us</h1>;
-        Exhale, designed by Seyi 
+        Exhale, designed by Sisan and Seyi 
       </div>
     )
   }

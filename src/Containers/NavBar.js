@@ -20,6 +20,12 @@ class Navbar extends React.Component {
               <Menu.Item>
                 <NavLink to="/profile"exact>Profile</NavLink> 
               </Menu.Item>
+              <Menu.Item>
+                <NavLink to="/journals"exact>Journals</NavLink>
+              </Menu.Item>
+              <Menu.Item>
+                <NavLink to="/tasks"exact>Tasks</NavLink>
+              </Menu.Item>
               <Menu.Item onClick={this.props.handleLogout}>
                 Logout
               </Menu.Item>

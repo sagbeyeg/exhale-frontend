@@ -10,6 +10,9 @@ import About from './Components/About'
 import Login from './Components/Login'
 import NavBar from './Containers/NavBar'
 import UserComp from './Components/UserComp'
+import JournalList from './Containers/JournalList'
+import TaskList from './Containers/TaskList'
+//import CreateJournalForm from './Components/CreateJournalForm'
 
 class App extends React.Component {
 
@@ -17,8 +20,16 @@ class App extends React.Component {
     email: '',
     password: '',
     user: {},
-    isLoggedIn: false
+    isLoggedIn: false,
+    api: []
   }
+  fetchUser =() => {
+    fetch(`http://localhost:3000/api/v1/users/${this.state.user.id}`)
+    .then(resp => resp.json())
+    .then(data => this.setState({api: data})); 
+  }
+
+
 
   componentDidMount = () => {
     const token = localStorage.getItem("token")
@@ -30,7 +41,11 @@ class App extends React.Component {
         headers: { Authorization: `Bearer ${token}`}
       })
       .then(resp=> resp.json())
-      .then(data => this.setState({isLoggedIn: true, user: data.user}))
+      .then(data => {
+        this.setState({isLoggedIn: true, user: data.user})
+        this.fetchUser()
+      })
+
     } else {
       this.handleLogout();
     }
@@ -95,11 +110,13 @@ class App extends React.Component {
           {/* <UserContainer api={this.state.api} /> */}
           <NavBar loggedIn={this.state.isLoggedIn} handleLogout={this.handleLogout}/>
           <Route exact path="/" component={Home} />
+          <Route exact path="/journals" render = {() => <JournalList user = {this.state.api}  />} />
+          <Route exact path="/tasks" render = {() => <TaskList user = {this.state.api}  />} />
           <Route exact path="/about" component={About}  />
           <Route exact path="/login" render={() => this.state.isLoggedIn? <Redirect to='/profile'/> : <Login loginClickHandler={this.loginClickHandler} loginSubmitHandler={this.loginSubmitHandler} />} />
           {this.state.isLoggedIn?
           <div>
-          <Route exact path="/profile" render={() => <UserComp user={this.state.user} /> } />
+          <Route exact path="/profile" render={() => <UserComp user={this.state.api} /> } />
             {/* <button onClick={this.renderUser}>Profile</button> */}
             {/* <Route exact path="/about" component={About}  /> */}
           </div>

@@ -11,7 +11,7 @@ export default class TaskList extends Component {
     renderTask= (e) => {
       const title = e.target.innerText.split(" - ")[0]
       console.log(title)
-      const task = this.props.user.tasks.find(task => task.title === title)
+      const task = this.props.tasks.find(task => task.title === title)
       this.setState({currentTask: task}, () => console.log(this.state.currentTask))
     }
     
@@ -22,10 +22,11 @@ export default class TaskList extends Component {
     
     render() {
       console.log(this.props)
+      let taskArray = (this.props.tasks? this.props.tasks : [])
       return (
         <div className ="journal-list">
           <Menu vertical inverted>
-              {this.props.user.tasks.map(task =>
+              {taskArray.map(task =>
                 <Menu.Item key={task.id} onClick={this.renderTask}>
                   {`${task.title} - (${task.status})`}
                 </Menu.Item> 
@@ -35,7 +36,7 @@ export default class TaskList extends Component {
           {this.state.form? 
             <>
             <button onClick={this.clickHandler}>Close Form</button>
-            <CreateTaskForm newTask={this.props.newTask} submitHandler={this.props.submitHandler} changeHandler={this.props.changeHandler} /> 
+            <CreateTaskForm newTask={this.props.newTask} submitHandler={this.props.submitHandler} changeHandler={this.props.changeHandler} clickHandler={this.clickHandler} /> 
             </>
             : 
             <>

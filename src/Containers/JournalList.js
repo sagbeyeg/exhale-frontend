@@ -1,14 +1,21 @@
 import React, { Component } from 'react'
 import Journal from '../Components/Journal' 
 import { Menu } from 'semantic-ui-react'
+import CreateJournalForm from '../Components/CreateJournalForm'
 
 export default class JournalList extends Component {
   state = {
-    currentJournal: []
+    currentJournal: [],
+    form: false
   }
+
+  clickHandler = () => {
+    this.setState(prevState => ({form: !prevState.form}))
+  }
+
   renderEntries= (e) => {
     const title = e.target.innerText
-    const journal = this.props.user.journals.find(journal => journal.title === title)
+    const journal = this.props.journals.find(journal => journal.title === title)
     this.setState({currentJournal: journal}, () => console.log(this.state.currentJournal))
     // return <Journal journal = {journal} key = {journal.id}/>
   }
@@ -19,13 +26,23 @@ export default class JournalList extends Component {
       <div className ="journal-list">
           <h3>Journal Entries</h3>
         <Menu vertical inverted>
-            {this.props.user? this.props.user.journals.map(journal =>
+            {this.props.journals? this.props.journals.map(journal =>
               <Menu.Item key={journal.id} onClick={this.renderEntries}>
                 {journal.title}
               </Menu.Item> 
             ) : null }
         </Menu>
-        <Journal journal = {this.state.currentJournal} key = {this.state.currentJournal.id}/>
+        {this.state.form? 
+            <>
+            <button onClick={this.clickHandler}>Close Form</button>
+            <CreateJournalForm newJournal={this.props.newJournal} journalSubmitHandler={this.props.journalSubmitHandler} journalChangeHandler={this.props.journalChangeHandler} clickHandler={this.clickHandler} /> 
+            </>
+            : 
+            <>
+            <button onClick={this.clickHandler}>New Journal</button>
+            <Journal journal = {this.state.currentJournal} key = {this.state.currentJournal.id}/>
+            </>   
+            } 
       </div>
     );
   }

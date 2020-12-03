@@ -1,9 +1,6 @@
 import React, { Component } from 'react'
 // import JournalList from '../Containers/JournalList'
-import { Route,  NavLink } from 'react-router-dom'
-import {
-  Menu
-} from "semantic-ui-react";
+
 
 export default class UserComp extends Component {
   // renderJournals = () => {

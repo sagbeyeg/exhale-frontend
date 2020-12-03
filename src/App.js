@@ -21,12 +21,17 @@ class App extends React.Component {
     password: '',
     user: {},
     isLoggedIn: false,
-    api: []
+    inclusiveUserData: [],
+    newTask: {
+      title: '',
+      status: 'incomplete',
+      content: ''
+    }
   }
   fetchUser =() => {
     fetch(`http://localhost:3000/api/v1/users/${this.state.user.id}`)
     .then(resp => resp.json())
-    .then(data => this.setState({api: data})); 
+    .then(data => this.setState({inclusiveUserData: data})); 
   }
 
 
@@ -42,6 +47,7 @@ class App extends React.Component {
       })
       .then(resp=> resp.json())
       .then(data => {
+        console.log(data.user)
         this.setState({isLoggedIn: true, user: data.user})
         this.fetchUser()
       })
@@ -93,12 +99,39 @@ class App extends React.Component {
       isLoggedIn: false,
       user: {}
     })
-    localStorage.removeItem("token");
+    localStorage.clear();
     // <Redirect to='/login'/>
     // this.props.history.push(`/login`)
   }
 
-  renderUser = () => {
+  submitHandler = () => {
+    console.log("Hi", )
+    fetch('http://localhost:3000/api/v1/tasks', {
+      method: "Post",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify({
+        title: this.state.newTask.title,
+        status: this.state.newTask.status,
+        content: this.state.newTask.content
+      })
+      .then(resp =>resp.json())
+      .then(newObj => {
+        const newArray = ({...this.state.inclusiveUserData, tasks:[...this.state.inclusiveUserData.tasks, newObj]})
+        console.log(newArray)
+        // this.setState({inclusiveUserData: [...this.state.inclusiveUserData.tasks, newObj] })
+      })
+    })
+  }
+
+  changeHandler = (e) => {
+    this.setState({
+      newTask: {
+        ...this.state.newTask, [ e.target.name ]: e.target.value,
+      }
+    })
   }
   
   
@@ -110,19 +143,17 @@ class App extends React.Component {
           {/* <UserContainer api={this.state.api} /> */}
           <NavBar loggedIn={this.state.isLoggedIn} handleLogout={this.handleLogout}/>
           <Route exact path="/" component={Home} />
-          <Route exact path="/journals" render = {() => <JournalList user = {this.state.api}  />} />
-          <Route exact path="/tasks" render = {() => <TaskList user = {this.state.api}  />} />
+          <Route exact path="/journals" render = {() => <JournalList user = {this.state.inclusiveUserData}  />} />
+          <Route exact path="/tasks" render = {() => <TaskList user = {this.state.inclusiveUserData} newTask={this.state.newTask} changeHandler={this.changeHandler}/>} submitHandler={this.submitHandler} />
           <Route exact path="/about" component={About}  />
           <Route exact path="/login" render={() => this.state.isLoggedIn? <Redirect to='/profile'/> : <Login loginClickHandler={this.loginClickHandler} loginSubmitHandler={this.loginSubmitHandler} />} />
           {this.state.isLoggedIn?
           <div>
-          <Route exact path="/profile" render={() => <UserComp user={this.state.api} /> } />
-            {/* <button onClick={this.renderUser}>Profile</button> */}
-            {/* <Route exact path="/about" component={About}  /> */}
+          <Route exact path="/profile" render={() => <UserComp user={this.state.inclusiveUserData} /> } />
           </div>
-          : <Redirect to='/login'/> }
-          {/*<Route exact path="/" render={/*<Home />} /> */ }
-          { /*<Route path='/movies' render={routerProps => <MoviesPage {...routerProps} movies={this.state.movies}/> } /> */ }
+          : 
+          <Redirect to='/login'/> 
+          }
         </div>
       </Router>
     );

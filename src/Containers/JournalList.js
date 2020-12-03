@@ -19,11 +19,11 @@ export default class JournalList extends Component {
       <div className ="journal-list">
           <h3>Journal Entries</h3>
         <Menu vertical inverted>
-            {this.props.user.journals.map(journal =>
+            {this.props.user? this.props.user.journals.map(journal =>
               <Menu.Item key={journal.id} onClick={this.renderEntries}>
                 {journal.title}
               </Menu.Item> 
-            )}
+            ) : null }
         </Menu>
         <Journal journal = {this.state.currentJournal} key = {this.state.currentJournal.id}/>
       </div>

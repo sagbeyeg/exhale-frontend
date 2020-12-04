@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import EditJournalForm from './EditJournalForm';
+//import ButtonGroup from 'react-bootstrap/ButtonGroup';
 
 export default class Journal extends Component {
     state = {
@@ -12,21 +13,23 @@ export default class Journal extends Component {
 
     render() {
         return (
-            <>
+            <div class="card" style={{backgroundColor: 'rgba(0,0,0,0.2)', color:'white'}}>
             {this.state.edit ?              
                 <EditJournalForm journal={this.props.journal} changeHandler={this.props.changeHandler} editSubmitHandler={this.props.editSubmitHandler} editClickHandler={this.editClickHandler}/> 
             :
                 <div>
-                    <h3>{this.props.journal.title}</h3>
+                    <h1>{this.props.journal.title}</h1>
                     <p>{this.props.journal.entry}</p>
                     <small><em>{this.props.journal.date? this.props.journal.date.split("T")[0] : this.props.journal.date}</em></small>
                     <div>
-                        <button type="button" onClick={this.editClickHandler}>Edit</button>
+                        {/* <ButtonGroup className="mb-2"> */}
+                        <button class="btn btn-primary" type="button" onClick={this.editClickHandler}>Edit</button>
                         <button type="button" class="btn btn-danger" id={this.props.journal.id} onClick={e => this.props.deleteJournal(e)}>Delete</button>
+                        {/* </ButtonGroup> */}
                     </div>
                 </div>
             } 
-            </>
+            </div>
         ); 
 
     }

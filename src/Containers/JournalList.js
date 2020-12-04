@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import Journal from '../Components/Journal' 
-import { Menu } from 'semantic-ui-react'
+import { Menu, Button } from 'semantic-ui-react'
 import CreateJournalForm from '../Components/CreateJournalForm'
-import Button from 'react-bootstrap/Button';
+import Dropdown from 'react-bootstrap/Dropdown'
+
 // import EditJournalForm from '../Components/EditJournalForm'
 
 export default class JournalList extends Component {
@@ -33,14 +34,21 @@ export default class JournalList extends Component {
     console.log(this.state.currentJournal)
     return (
       <div className ="journal-list">
-          <h3>Journal Entries</h3>
-        <Menu vertical inverted>
-            {this.props.journals? this.props.journals.map(journal =>
-              <Menu.Item key={journal.id} onClick={this.renderEntries}>
-                {journal.title}
-              </Menu.Item> 
-            ) : null }
-        </Menu>
+        <h3 class="large-button-text">Journal Entries</h3>
+        <Dropdown>
+            <Dropdown.Toggle variant="primary" id="dropdown-basic">
+              Your Journal Entries
+            </Dropdown.Toggle>
+
+            <Dropdown.Menu>
+              {this.props.journals? this.props.journals.map(journal =>
+                <Dropdown.Item key={journal.id} onClick={this.renderEntries}>
+                  {journal.title}
+                </Dropdown.Item> 
+              ) : null }
+            </Dropdown.Menu>
+          </Dropdown>
+        <div class="body">
         {this.state.form? 
           <>
           <Button onClick={this.clickHandler}>Close Form</Button>
@@ -48,10 +56,11 @@ export default class JournalList extends Component {
           </>
           : 
           <>
-          <button onClick={this.clickHandler}>New Journal</button>
+          <button class="ui button" onClick={this.clickHandler}>New Journal</button> 
           <Journal journal = {this.state.currentJournal} key = {this.state.currentJournal.id} changeHandler={this.changeHandler} editSubmitHandler={this.props.editSubmitHandler} deleteJournal={this.props.deleteJournal} />
-          </>   
-        }  
+          </>    
+        }
+        </div>  
       </div>
     );
   }

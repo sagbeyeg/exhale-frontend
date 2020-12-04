@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import { Menu } from 'semantic-ui-react'
 import Task from '../Components/Task'
 import CreateTaskForm from '../Components/CreateTaskForm'
+import Dropdown from 'react-bootstrap/Dropdown'
 
 export default class TaskList extends Component {
     state = {
@@ -25,22 +25,28 @@ export default class TaskList extends Component {
       let taskArray = (this.props.tasks? this.props.tasks : [])
       return (
         <div className ="journal-list">
-          <Menu vertical inverted>
+              <h3 class="large-button-text">Tasks</h3> 
+          <Dropdown>
+            <Dropdown.Toggle variant="primary" id="dropdown-basic">
+              Your Tasks
+            </Dropdown.Toggle>
+
+            <Dropdown.Menu>
               {taskArray.map(task =>
-                <Menu.Item key={task.id} onClick={this.renderTask}>
+                <Dropdown.Item key={task.id} onClick={this.renderTask}>
                   {`${task.title} - (${task.status})`}
-                </Menu.Item> 
+                </Dropdown.Item> 
               )}
-          </Menu>
-          <h3>Tasks</h3>
+            </Dropdown.Menu>
+          </Dropdown>
           {this.state.form? 
             <>
-            <button onClick={this.clickHandler}>Close Form</button>
+            <button onClick={this.clickHandler} class="ui button">Close Form</button>
             <CreateTaskForm newTask={this.props.newTask} submitHandler={this.props.submitHandler} changeHandler={this.props.changeHandler} clickHandler={this.clickHandler} /> 
             </>
             : 
             <>
-            <button onClick={this.clickHandler}>New Task</button>
+            <button onClick={this.clickHandler} class="ui button">New Task</button>
             <Task task = {this.state.currentTask} key = {this.state.currentTask.id}/>
             </>   
             } 

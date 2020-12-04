@@ -9,11 +9,17 @@ class EditJournalForm extends Component {
 
   render() {
     return (
-        <form onSubmit ={this.localSubmitHandler} className="create-journal-form" id={this.props.journal.id}>
-          <input  name = "title" value = {this.props.journal.title} onChange ={this.props.changeHandler}/>
-          <input type=""  name = "date" value = {Date()} onChange ={this.props.changeHandler}/>
-          <textarea name = "entry" value = {this.props.journal.entry} onChange ={this.props.changeHandler} />
-          <input type="submit" value="Save Entry!" />
+        <form onSubmit ={this.localSubmitHandler} id={this.props.journal.id}>
+          <div class="form-group">
+            Title:<input class="form-control" name = "title" value = {this.props.journal.title} onChange ={this.props.changeHandler}/>
+          </div>
+          <div class="form-group">
+            Date:<input class="form-control" type=""  name = "date" value = {Date()} onChange ={this.props.changeHandler}/>
+          </div>
+            Entry:<textarea class="form-control" name = "entry" value = {this.props.journal.entry} onChange ={this.props.changeHandler} />
+          <div class="form-group">
+          <button class="btn btn-primary">Save Entry!</button> 
+          </div>
         </form>
     );
   }

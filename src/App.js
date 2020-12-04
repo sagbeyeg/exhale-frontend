@@ -6,12 +6,16 @@ import {
   Redirect
 } from 'react-router-dom'
 import Home from './Components/Home'
+import Meditation from './Components/Meditation'
 import About from './Components/About'
 import Login from './Components/Login'
 import NavBar from './Containers/NavBar'
 import UserComp from './Components/UserComp'
 import JournalList from './Containers/JournalList'
 import TaskList from './Containers/TaskList'
+import Music from './Components/Music'
+import Yoga from './Components/Yoga'
+//import SpotifyPlayer from 'react-spotify-player';
 
 class App extends React.Component {
 
@@ -25,7 +29,7 @@ class App extends React.Component {
     inclusiveUserData: [],
     newTask: {
       title: '',
-      status: 'incomplete',
+      status: 'Incomplete',
       content: ''
     },
     newJournal: {
@@ -74,18 +78,7 @@ class App extends React.Component {
   }
 
   loginSubmitHandler = () => {
-    // const configObj = {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     "Accepts": "application/json"
-    //   },
-    //   body: JSON.stringify({
-    //     email_address: this.state.email,
-    //     password: this.state.password
-    //   })
-    // }
-
+    
     fetch(`http://localhost:3000/api/v1/by_email/${this.state.email}`)
     .then(resp => resp.json())
     .then(data => {
@@ -136,7 +129,7 @@ class App extends React.Component {
         // const newArray = ({...this.state.tasks, newObj})
         // console.log(newArray)
         this.setState({
-          tasks: [...this.state.tasks, newObj.task],
+          tasks: this.state.tasks.prepend (newObj.task),
           newTask: {
             title: '',
             status: 'incomplete',
@@ -242,7 +235,10 @@ class App extends React.Component {
           <Route exact path="/journals" render = {() => <JournalList journals = {this.state.journals} newJournal={this.state.newJournal} journalChangeHandler={this.journalChangeHandler} journalSubmitHandler={this.journalSubmitHandler} editSubmitHandler={this.editSubmitHandler} deleteJournal={this.deleteJournal}/>}  /> 
           <Route exact path="/tasks" render = {() => <TaskList tasks = {this.state.tasks} newTask={this.state.newTask} changeHandler={this.changeHandler} submitHandler={this.submitHandler} />} />
           <Route exact path="/about" component={About}  />
-          <Route exact path="/login" render={() => this.state.isLoggedIn? <Redirect to='/profile'/> : <Login loginClickHandler={this.loginClickHandler} loginSubmitHandler={this.loginSubmitHandler} />} />
+          <Route exact path="/music" component={Music}  />
+          <Route exact path="/yoga" component={Yoga}  />
+          <Route exact path="/meditation" component={Meditation} />
+          <Route exact path="/login" render={() => this.state.isLoggedIn? <Redirect to='/'/> : <Login loginClickHandler={this.loginClickHandler} loginSubmitHandler={this.loginSubmitHandler} />} />
           {this.state.isLoggedIn?
           <div>
           <Route exact path="/profile" render={() => <UserComp user={this.state.user} /> } />

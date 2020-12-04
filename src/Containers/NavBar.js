@@ -8,7 +8,7 @@ class Navbar extends React.Component {
   render() {
     return (
       <div>
-        <menu horizontal class="ui nine item menu top-nav">
+        <menu horizontal class="ui seven item menu top-nav">
           {/* <Menu.Item>
             <video  autoplay loop muted playsinline src="./exhale-logo.mp4" style={{height:"1.1cm"}} />
           </Menu.Item>

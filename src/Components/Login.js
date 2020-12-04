@@ -1,4 +1,5 @@
 import React from 'react';
+import Button from 'react-bootstrap/Button';
 
 class Login extends React.Component {
   localSubmitHandler = (e) => {
@@ -17,7 +18,7 @@ class Login extends React.Component {
           <label htmlFor="password">Password: </label>
           <input type="password" name="password" placeholder="Password" onChange={this.props.loginClickHandler} />
         </div>
-        <input type="submit" value="Login" />
+        <Button>Login</Button> 
       </form>
     );
   }

@@ -2,11 +2,19 @@ import React, { Component } from 'react'
 import Journal from '../Components/Journal' 
 import { Menu } from 'semantic-ui-react'
 import CreateJournalForm from '../Components/CreateJournalForm'
+import Button from 'react-bootstrap/Button';
+// import EditJournalForm from '../Components/EditJournalForm'
 
 export default class JournalList extends Component {
   state = {
-    currentJournal: [],
+    currentJournal: {
+      
+    }, 
     form: false
+  }
+
+  changeHandler =  (e) => {
+    this.setState({currentJournal: {...this.state.currentJournal, [ e.target.name ]: e.target.value}}, () => console.log(this.state.currentJournal))
   }
 
   clickHandler = () => {
@@ -17,11 +25,12 @@ export default class JournalList extends Component {
     const title = e.target.innerText
     const journal = this.props.journals.find(journal => journal.title === title)
     this.setState({currentJournal: journal}, () => console.log(this.state.currentJournal))
-    // return <Journal journal = {journal} key = {journal.id}/>
+
   }
 
 
   render() {
+    console.log(this.state.currentJournal)
     return (
       <div className ="journal-list">
           <h3>Journal Entries</h3>
@@ -33,16 +42,16 @@ export default class JournalList extends Component {
             ) : null }
         </Menu>
         {this.state.form? 
-            <>
-            <button onClick={this.clickHandler}>Close Form</button>
-            <CreateJournalForm newJournal={this.props.newJournal} journalSubmitHandler={this.props.journalSubmitHandler} journalChangeHandler={this.props.journalChangeHandler} clickHandler={this.clickHandler} /> 
-            </>
-            : 
-            <>
-            <button onClick={this.clickHandler}>New Journal</button>
-            <Journal journal = {this.state.currentJournal} key = {this.state.currentJournal.id}/>
-            </>   
-            } 
+          <>
+          <Button onClick={this.clickHandler}>Close Form</Button>
+          <CreateJournalForm newJournal={this.props.newJournal} journalSubmitHandler={this.props.journalSubmitHandler} journalChangeHandler={this.props.journalChangeHandler} clickHandler={this.clickHandler} /> 
+          </>
+          : 
+          <>
+          <button onClick={this.clickHandler}>New Journal</button>
+          <Journal journal = {this.state.currentJournal} key = {this.state.currentJournal.id} changeHandler={this.changeHandler} editSubmitHandler={this.props.editSubmitHandler} deleteJournal={this.props.deleteJournal} />
+          </>   
+        }  
       </div>
     );
   }

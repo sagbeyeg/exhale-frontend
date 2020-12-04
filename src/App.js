@@ -12,7 +12,6 @@ import NavBar from './Containers/NavBar'
 import UserComp from './Components/UserComp'
 import JournalList from './Containers/JournalList'
 import TaskList from './Containers/TaskList'
-//import CreateJournalForm from './Components/CreateJournalForm'
 
 class App extends React.Component {
 
@@ -40,6 +39,8 @@ class App extends React.Component {
   //   .then(resp => resp.json())
   //   .then(data => this.setState({inclusiveUserData: data})); 
   // }
+
+  
 
 
 
@@ -90,7 +91,7 @@ class App extends React.Component {
     .then(data => {
       localStorage.setItem("user", data.user.id)
       this.handleLogin(data)
-      console.log(data.user)
+      //console.log(data.user)
     })
   }
 
@@ -144,7 +145,33 @@ class App extends React.Component {
         })
 
       })
-    }
+  }
+
+  editSubmitHandler = (e) => {
+
+    fetch(`http://localhost:3000/api/v1/journals/${e.target.id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        "Accepts": "application/json"
+      },
+      body: JSON.stringify({ 
+        title: e.target.title.value,
+        entry: e.target.entry.value,
+        date: e.target.date.value 
+       })
+    })
+    .then(resp => resp.json())
+    .then(newJournal => {
+      let copiedArray = [...this.state.journals]
+      // let oldJournal = copiedArray.find(journal => Journal.id === newJournal.id)
+      let idx = copiedArray.findIndex(journal => journal.id === newJournal.id)
+      copiedArray[idx] = newJournal;
+      this.setState({ journals: copiedArray });
+      console.log(newJournal)
+    })
+    .catch(console.log)
+  };
   
 
 
@@ -164,6 +191,13 @@ class App extends React.Component {
     })
   }
   
+  deleteJournal = (j) => {
+    console.log(j.target.id)
+      fetch(`http://localhost:3000/api/v1/journals/${j.target.id}`, { method: "DELETE" })
+      // .then(resp => resp.json())
+      .then()
+  } 
+
   journalSubmitHandler = () => {
     const configObj = {
       method: "POST",
@@ -178,7 +212,7 @@ class App extends React.Component {
         user_id: this.state.user.id
       })
     }
-    console.log("Hi", )
+    // console.log("Hi", )
     fetch('http://localhost:3000/api/v1/journals', configObj)
       .then(resp =>resp.json())
       .then(newObj => {
@@ -195,16 +229,17 @@ class App extends React.Component {
 
       })
   }
+
   
   render() {
     console.log(this.state)
     return (
       <Router>
-        <div class="App">
+        <div className="App">
           {/* <UserContainer api={this.state.api} /> */}
           <NavBar loggedIn={this.state.isLoggedIn} handleLogout={this.handleLogout}/>
           <Route exact path="/" component={Home} />
-          <Route exact path="/journals" render = {() => <JournalList journals = {this.state.journals} newJournal={this.state.newJournal} journalChangeHandler={this.journalChangeHandler} journalSubmitHandler={this.journalSubmitHandler} />} />
+          <Route exact path="/journals" render = {() => <JournalList journals = {this.state.journals} newJournal={this.state.newJournal} journalChangeHandler={this.journalChangeHandler} journalSubmitHandler={this.journalSubmitHandler} editSubmitHandler={this.editSubmitHandler} deleteJournal={this.deleteJournal}/>}  /> 
           <Route exact path="/tasks" render = {() => <TaskList tasks = {this.state.tasks} newTask={this.state.newTask} changeHandler={this.changeHandler} submitHandler={this.submitHandler} />} />
           <Route exact path="/about" component={About}  />
           <Route exact path="/login" render={() => this.state.isLoggedIn? <Redirect to='/profile'/> : <Login loginClickHandler={this.loginClickHandler} loginSubmitHandler={this.loginSubmitHandler} />} />

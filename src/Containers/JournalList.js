@@ -33,7 +33,7 @@ export default class JournalList extends Component {
   render() {
     console.log(this.state.currentJournal)
     return (
-      <div className ="journal-list">
+      <div className ="card" style={{backgroundColor: 'rgba(0,0,0,0.2)', color:'white'}}>
         <h3 class="large-button-text">Journal Entries</h3>
         <Dropdown>
             <Dropdown.Toggle variant="primary" id="dropdown-basic">

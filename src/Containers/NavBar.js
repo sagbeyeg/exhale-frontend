@@ -1,13 +1,19 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom';
 import {
-  Menu
+  Menu, Dropdown
 } from "semantic-ui-react";
 
 class Navbar extends React.Component {
   render() {
     return (
       <div>
+        {/* {this.props.loggedIn?
+              <menu horizontal class="ui seven item menu top-nav">
+                  <iframe src="https://open.spotify.com/embed/playlist/37i9dQZF1E4FHZO7bx8oeB?theme=white"  width="100%" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+              </menu>
+             :
+             null} */}
         <menu horizontal class="ui seven item menu top-nav">
           {/* <Menu.Item>
             <video  autoplay loop muted playsinline src="./exhale-logo.mp4" style={{height:"1.1cm"}} />
@@ -30,9 +36,27 @@ class Navbar extends React.Component {
               <Menu.Item as={NavLink} to="/yoga" exact>
                 Yoga
               </Menu.Item>
-              <Menu.Item as={NavLink} to="/music" exact>
-                Music
-              </Menu.Item>
+              
+                 {/* <Dropdown>
+                  <Dropdown.Toggle id="dropdown-basic">
+                  🎵Music🎵
+                  </Dropdown.Toggle>
+                  <Dropdown.Menu> */}
+                <Menu.Item as={NavLink} to="/music" exact>
+                  Music
+                </Menu.Item>
+                    {/* <iframe src="https://open.spotify.com/embed/playlist/37i9dQZF1E4FHZO7bx8oeB" width="100%" height="70" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+                  </Dropdown.Menu>
+                </Dropdown>
+                <Dropdown text='🎵Music🎵' pointing='down' >
+                  <Dropdown.Menu>
+                    <Dropdown.Item as={NavLink} to="/music" exact>
+                      Music
+                    </Dropdown.Item>
+                    <Dropdown.Item>Sent Mail</Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>  */}
+              
               <Menu.Item as={NavLink} to="/journals" exact>
                 Journal Entries
               </Menu.Item>
@@ -48,6 +72,7 @@ class Navbar extends React.Component {
               Login
             </Menu.Item>} 
         </menu>
+        
       </div>
     )
   }

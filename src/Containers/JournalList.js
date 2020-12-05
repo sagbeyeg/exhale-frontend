@@ -36,7 +36,7 @@ export default class JournalList extends Component {
       <div className ="card" style={{backgroundColor: 'rgba(0,0,0,0.2)', color:'white'}}>
         <h3 class="large-button-text">Journal Entries</h3>
         <Dropdown>
-            <Dropdown.Toggle variant="primary" id="dropdown-basic">
+            <Dropdown.Toggle variant="secondary" id="dropdown-basic">
               Your Journal Entries
             </Dropdown.Toggle>
 

@@ -22,7 +22,7 @@ export default class CreateJournalForm extends Component {
           <div class="form-group">
             <textarea class="form-control" placeholder="Write your entry here" name = "entry" value = {this.props.newJournal.entry} onChange ={this.props.journalChangeHandler} />
           </div>
-          <button class="btn btn-primary">Submit Entry!</button> 
+          <button  class="btn btn-primary">Submit Entry!</button> 
         </form>
         )
     }

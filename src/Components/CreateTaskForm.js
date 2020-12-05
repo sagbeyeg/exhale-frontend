@@ -24,20 +24,9 @@ export default class CreateTaskForm extends Component {
           <div class="form-group">
             <textarea class="form-control" placeholder="Write your task here..." name = "content" value = {newTask.content} onChange ={this.props.changeHandler} rows={10} />
           </div>
-          <button class="btn btn-primary">Write it down!</button>
+          <input class="btn btn-primary">Write it down!</input>
         </form>
-    //   <form onSubmit={this.localSubmitHandler} class="card">
-    //   <h1>Login</h1>
-    //   <div class="form-group">
-    //     {/* <label for="email">Email: </label> */}
-    //     <input type="text" class="form-control" name="email" placeholder="Email" onChange={this.props.loginClickHandler}/>
-    //   </div>
-    //   <div class="form-group">
-    //     {/* <label for="password">Password: </label> */}
-    //     <input type="password" class="form-control" name="password" placeholder="Password" onChange={this.props.loginClickHandler} />
-    //   </div>
-    //   <button class="btn btn-primary">Login</button> 
-    // </form>
+    
     )
   }
 

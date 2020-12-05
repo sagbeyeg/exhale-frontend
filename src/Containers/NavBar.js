@@ -34,7 +34,7 @@ class Navbar extends React.Component {
                 Meditation
               </Menu.Item>
               <Menu.Item as={NavLink} to="/yoga" exact>
-                Yoga
+                Daily Yoga
               </Menu.Item>
               
                  {/* <Dropdown>

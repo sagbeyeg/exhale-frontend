@@ -10,7 +10,7 @@ import Meditation from './Components/Meditation'
 import About from './Components/About'
 import Login from './Components/Login'
 import NavBar from './Containers/NavBar'
-import UserComp from './Components/UserComp'
+// import UserComp from './Components/UserComp'
 import JournalList from './Containers/JournalList'
 import TaskList from './Containers/TaskList'
 import Music from './Components/Music'
@@ -25,8 +25,8 @@ class App extends React.Component {
     user: {},
     tasks: '',
     journals: '',
-    isLoggedIn: false,
-    inclusiveUserData: [],
+    isLoggedIn: true,
+    // inclusiveUserData: [],
     newTask: {
       title: '',
       status: 'Incomplete',
@@ -44,30 +44,18 @@ class App extends React.Component {
   //   .then(data => this.setState({inclusiveUserData: data})); 
   // }
 
-  
+
+  componentDidMount = () => {
+    if (localStorage.user_id) {
+      fetch(`http://localhost:3000/api/v1/users/${localStorage.user_id}`) 
+        .then(resp => resp.json())
+        .then(userObj => this.setState({user: userObj, loggedIn: true, journals: userObj.journals, tasks: userObj.tasks}))
+    } else {
+      this.handleLogout();
+    }
+  }
 
 
-
-  // componentDidMount = () => {
-  //   const token = localStorage.getItem("token")
-  //   console.log(token)
-    
-  //   if (token) {
-  //     fetch('http://localhost:3000/api/v1/profile', {
-  //       method: "GET",
-  //       headers: { Authorization: `Bearer ${token}`}
-  //     })
-  //     .then(resp=> resp.json())
-  //     .then(data => {
-  //       console.log(data.user)
-  //       if (data.user) this.setState({isLoggedIn: true, user: data.user})
-  //       // this.fetchUser()
-  //     })
-
-  //   } else {
-  //     this.handleLogout();
-  //   }
-  // }
 
   loginClickHandler = (e) => {
     this.setState({
@@ -82,7 +70,7 @@ class App extends React.Component {
     fetch(`http://localhost:3000/api/v1/by_email/${this.state.email}`)
     .then(resp => resp.json())
     .then(data => {
-      localStorage.setItem("user", data.user.id)
+      localStorage.setItem("user_id", data.user.id)
       this.handleLogin(data)
       //console.log(data.user)
     })
@@ -95,7 +83,7 @@ class App extends React.Component {
       tasks: data.user.tasks,
       journals: data.user.journals
     })
-    return <Redirect to='/profile'/>
+    
   }
 
   handleLogout = () => {
@@ -106,6 +94,7 @@ class App extends React.Component {
       password: ''
     })
     localStorage.clear();
+    return <Redirect to='/login'/>
   }
 
   submitHandler = () => {
@@ -238,20 +227,21 @@ class App extends React.Component {
           {/* <UserContainer api={this.state.api} /> */}
           <NavBar loggedIn={this.state.isLoggedIn} handleLogout={this.handleLogout}/>
           <Route exact path="/" component={Home} />
-          <Route exact path="/journals" render = {() => <JournalList journals = {this.state.journals} newJournal={this.state.newJournal} journalChangeHandler={this.journalChangeHandler} journalSubmitHandler={this.journalSubmitHandler} editSubmitHandler={this.editSubmitHandler} deleteJournal={this.deleteJournal}/>}  /> 
-          <Route exact path="/tasks" render = {() => <TaskList tasks = {this.state.tasks} newTask={this.state.newTask} changeHandler={this.changeHandler} submitHandler={this.submitHandler} />} />
+          <Route exact path="/journals" render = {() => this.state.isLoggedIn? <JournalList journals = {this.state.journals} newJournal={this.state.newJournal} journalChangeHandler={this.journalChangeHandler} journalSubmitHandler={this.journalSubmitHandler} editSubmitHandler={this.editSubmitHandler} deleteJournal={this.deleteJournal}/> : <Redirect to='/login'/> }  /> 
+          <Route exact path="/tasks" render = {() => this.state.isLoggedIn? <TaskList tasks = {this.state.tasks} newTask={this.state.newTask} changeHandler={this.changeHandler} submitHandler={this.submitHandler} /> : <Redirect to='/login'/>} />
           <Route exact path="/about" component={About}  />
-          <Route exact path="/music" component={Music}  />
-          <Route exact path="/yoga" component={Yoga}  />
-          <Route exact path="/meditation" component={Meditation} />
+          <Route exact path="/music" render = {() => this.state.isLoggedIn? <Music/> : <Redirect to='/login'/>}  />
+          <Route exact path="/yoga" render = {() => this.state.isLoggedIn? <Yoga/> : <Redirect to='/login'/>}  />
+          <Route exact path="/meditation" render = {() => this.state.isLoggedIn? <Meditation/> : <Redirect to='/login'/>} />
           <Route exact path="/login" render={() => this.state.isLoggedIn? <Redirect to='/'/> : <Login loginClickHandler={this.loginClickHandler} loginSubmitHandler={this.loginSubmitHandler} />} />
-          {this.state.isLoggedIn?
+          <Route exact path="/logout" render={() => <Redirect to='/login' />} />
+          {/* {this.state.isLoggedIn?
           <div>
           <Route exact path="/profile" render={() => <UserComp user={this.state.user} /> } />
           </div>
           : 
           <Redirect to='/login'/> 
-          }
+          } */}
         </div>
       </Router>
     );

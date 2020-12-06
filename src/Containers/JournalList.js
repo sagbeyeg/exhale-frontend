@@ -61,13 +61,17 @@ export default class JournalList extends Component {
         <div class="body">
         {this.state.form? 
           <>
-          <Button onClick={this.clickHandler}>Close Form</Button>
-          <CreateJournalForm newJournal={this.props.newJournal} journalSubmitHandler={this.props.journalSubmitHandler} journalChangeHandler={this.props.journalChangeHandler} clickHandler={this.clickHandler} /> 
+            <Button onClick={this.clickHandler}>Close Form</Button>
+            <CreateJournalForm newJournal={this.props.newJournal} journalSubmitHandler={this.props.journalSubmitHandler} journalChangeHandler={this.props.journalChangeHandler} clickHandler={this.clickHandler} /> 
           </>
           : 
           <>
-          <button class="ui button" onClick={this.clickHandler}>New Journal</button>
-          <Journal journal = {this.state.currentJournal} key = {this.state.currentJournal.id} changeHandler={this.changeHandler} editSubmitHandler={this.props.editSubmitHandler} deleteJournal={this.localDeleteHandler} />
+            {this.state.currentJournal? 
+            <>
+              <button class="ui button" onClick={this.clickHandler}>New Journal</button>
+              <Journal journal = {this.state.currentJournal} key = {this.state.currentJournal.id} changeHandler={this.changeHandler} editSubmitHandler={this.props.editSubmitHandler} deleteJournal={this.localDeleteHandler} />
+            </> 
+            : null}
           </>    
         }
         </div>  

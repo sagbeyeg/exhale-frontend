@@ -6,6 +6,7 @@ import {
 
 class Navbar extends React.Component {
   render() {
+    console.log(this.props.loggedIn)
     return (
       <div>
         {/* {this.props.loggedIn?
@@ -63,7 +64,7 @@ class Navbar extends React.Component {
               {/* <Menu.Item as={NavLink} to="/tasks" exact>
                 Tasks
               </Menu.Item> */}
-              <Menu.Item onClick={this.props.handleLogout}>
+              <Menu.Item as={NavLink} to="/logout" onClick={this.props.handleLogout}>
                 Logout
               </Menu.Item>
             </>

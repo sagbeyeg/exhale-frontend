@@ -4,6 +4,11 @@
 
 }
 
+.tips {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
 .large-button-text {
   font-size: 40px;
 } 

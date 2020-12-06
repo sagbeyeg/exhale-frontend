@@ -1,15 +1,29 @@
 import React, { Component } from 'react'
 
 export default class Meditation extends Component {
+    state = {
+        tips: false
+    }
+
+    toggleTips = () => {
+        this.setState(prevState => ({tips: !prevState.tips}))
+    }
+
     render() {
         return (
             <div class="card" style={{backgroundColor: 'rgba(0,0,0,0.2)', color:'white'}}>
-                {/* <h1>Meditate</h1> */}
-                <iframe src="https://open.spotify.com/embed/playlist/37i9dQZF1DWVS1recTqXhf" title="guided meditation" width="100%" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+                <h1>Meditation</h1>
+                <br></br> 
+               <iframe src="https://open.spotify.com/embed/playlist/37i9dQZF1DWVS1recTqXhf" title="guided meditation" width="100%" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
                <br></br>
-               <h1> Helpful Tips Before You Start </h1>
+               {this.state.tips? 
+                <button class="btn btn-primary btn-lg" onClick={this.toggleTips}> Close Helpful Tips </button>
+               :
+                <button class="btn btn-primary btn-lg" onClick={this.toggleTips}> Helpful Tips Before You Start </button>
+               }
                <br></br>
-               <ol style={{fontSize: '25px', textAlign: 'left'}}> 
+               {this.state.tips?
+               <ol class="card tips" style={{backgroundColor: 'rgba(0,0,0,0.2)', color:'white', fontSize: '25px', textAlign: 'left', margin: '0px'}}> 
                     <li>
                         Take a seat: Find a place to sit that feels calm and quiet to you.
                     </li>
@@ -38,9 +52,12 @@ export default class Meditation extends Component {
                      Close with kindness: When you’re ready, gently lift your gaze (if your eyes are closed, open them). Take a moment and notice any sounds in the environment. Notice how your body feels right now. Notice your thoughts and emotions.
                     </li>
                      
+                    <br></br>
+                    That’s it! That’s the practice. You go away, you come back, and you try to do it as kindly as possible.
                </ol>
-                <br></br>
-                That’s it! That’s the practice. You go away, you come back, and you try to do it as kindly as possible.
+               
+                :
+                null}
             </div>
         )
     }

@@ -8,9 +8,7 @@ import Dropdown from 'react-bootstrap/Dropdown'
 
 export default class JournalList extends Component {
   state = {
-    currentJournal: {
-      
-    }, 
+    currentJournal: this.props.journals.slice(-1)[0], 
     form: false
   }
 
@@ -68,7 +66,7 @@ export default class JournalList extends Component {
           </>
           : 
           <>
-          <button class="ui button" onClick={this.clickHandler}>New Journal</button> 
+          <button class="ui button" onClick={this.clickHandler}>New Journal</button>
           <Journal journal = {this.state.currentJournal} key = {this.state.currentJournal.id} changeHandler={this.changeHandler} editSubmitHandler={this.props.editSubmitHandler} deleteJournal={this.localDeleteHandler} />
           </>    
         }

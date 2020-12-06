@@ -22,7 +22,6 @@ export default class Journal extends Component {
                     <p>{this.props.journal.entry}</p>
                     <small><em>{this.props.journal.date? this.props.journal.date.split("T")[0] : this.props.journal.date}</em></small>
                     <div>
-                        {/* <ButtonGroup className="mb-2"> */}
                         <button class="btn btn-secondary" type="button" onClick={this.editClickHandler}>Edit</button>
                         <button type="button" class="btn btn-secondary" id={this.props.journal.id} onClick={e => this.props.deleteJournal(e)}>Delete</button>
                         {/* </ButtonGroup> */}

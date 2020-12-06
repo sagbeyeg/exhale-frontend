@@ -14,11 +14,15 @@ class Navbar extends React.Component {
               </menu>
              :
              null} */}
-        <menu horizontal class="ui seven item menu top-nav">
-          {/* <Menu.Item>
-            <video  autoplay loop muted playsinline src="./exhale-logo.mp4" style={{height:"1.1cm"}} />
-          </Menu.Item>
-          <Menu.Item><image src="./logo.png"></image></Menu.Item> */}
+        <menu horizontal class="ui nine item menu top-nav">
+          {this.props.loggedIn? 
+          <iframe src="https://open.spotify.com/embed/playlist/37i9dQZF1E4FHZO7bx8oeB" width="100%" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+          :
+          null}
+          {/* <Menu.Item> */}
+            {/* <video  autoplay loop muted playsinline src="./exhale-logo.mp4" style={{height:"1.1cm"}} /> */}
+          {/* </Menu.Item> */}
+          {/* <Menu.Item><image src="./logo.png"></image></Menu.Item> */}
             <Menu.Item as={NavLink} to="/" exact>
               Home
             </Menu.Item>

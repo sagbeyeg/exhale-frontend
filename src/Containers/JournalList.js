@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Journal from '../Components/Journal' 
-import { Menu, Button } from 'semantic-ui-react'
+import { Button } from 'semantic-ui-react'
 import CreateJournalForm from '../Components/CreateJournalForm'
 import Dropdown from 'react-bootstrap/Dropdown'
 
@@ -27,6 +27,18 @@ export default class JournalList extends Component {
     const journal = this.props.journals.find(journal => journal.title === title)
     this.setState({currentJournal: journal}, () => console.log(this.state.currentJournal))
 
+  }
+
+  localDeleteHandler = (e) => {
+    //copied journals array
+    let copiedArray = this.props.journals
+    //find the index of the journal to be deleted
+    let idx = copiedArray.findIndex(journal => journal.id == e.target.id)
+    //go to the previous index
+    let currentIdx = idx - 1
+    //make that the currentJournal
+    this.setState({currentJournal: copiedArray[currentIdx]}, () => console.log(this.state.currentJournal))
+    this.props.deleteJournal(e)
   }
 
 
@@ -57,7 +69,7 @@ export default class JournalList extends Component {
           : 
           <>
           <button class="ui button" onClick={this.clickHandler}>New Journal</button> 
-          <Journal journal = {this.state.currentJournal} key = {this.state.currentJournal.id} changeHandler={this.changeHandler} editSubmitHandler={this.props.editSubmitHandler} deleteJournal={this.props.deleteJournal} />
+          <Journal journal = {this.state.currentJournal} key = {this.state.currentJournal.id} changeHandler={this.changeHandler} editSubmitHandler={this.props.editSubmitHandler} deleteJournal={this.localDeleteHandler} />
           </>    
         }
         </div>  

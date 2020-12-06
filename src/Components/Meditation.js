@@ -5,7 +5,7 @@ export default class Meditation extends Component {
         return (
             <div class="card" style={{backgroundColor: 'rgba(0,0,0,0.2)', color:'white'}}>
                 {/* <h1>Meditate</h1> */}
-                <iframe src="https://open.spotify.com/embed/track/5UTtcMpmlkD8AEGxxZclLe" width="100%" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe> 
+                <iframe src="https://open.spotify.com/embed/playlist/37i9dQZF1DWVS1recTqXhf" title="guided meditation" width="100%" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
                <br></br>
                <h1> Helpful Tips Before You Start </h1>
                <br></br>
@@ -15,7 +15,7 @@ export default class Meditation extends Component {
                     </li>
                     <br></br>
                     <li>
-                        Set a time limit:If you’re just beginning, it can help to choose a short time, such as five or 10 minutes.
+                        Set a time limit: If you’re just beginning, it can help to choose a short time, such as five or 10 minutes.
                     </li>
                     <br></br>
                     <li>

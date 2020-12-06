@@ -186,9 +186,15 @@ class App extends React.Component {
   
   deleteJournal = (j) => {
     console.log(j.target.id)
-      fetch(`http://localhost:3000/api/v1/journals/${j.target.id}`, { method: "DELETE" })
-      // .then(resp => resp.json())
-      .then()
+    console.log(this.state.journals)
+    let copiedArray = this.state.journals
+    let idx = copiedArray.findIndex(journal => journal.id == j.target.id)
+    // console.log(idx)
+    copiedArray[idx] = {};
+    this.setState({ journals: copiedArray });
+    console.log(this.state.journals)
+
+    fetch(`http://localhost:3000/api/v1/journals/${j.target.id}`, { method: "DELETE" })
   } 
 
   journalSubmitHandler = () => {

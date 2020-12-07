@@ -15,7 +15,6 @@ import JournalList from './Containers/JournalList'
 import TaskList from './Containers/TaskList'
 import Music from './Components/Music'
 import Yoga from './Components/Yoga'
-//import SpotifyPlayer from 'react-spotify-player';
 
 class App extends React.Component {
 
@@ -38,11 +37,6 @@ class App extends React.Component {
       entry: ''
     }
   }
-  // fetchUser =() => {
-  //   fetch(`http://localhost:3000/api/v1/users/${this.state.user.id}`)
-  //   .then(resp => resp.json())
-  //   .then(data => this.setState({inclusiveUserData: data})); 
-  // }
 
 
   componentDidMount = () => {
@@ -72,7 +66,6 @@ class App extends React.Component {
     .then(data => {
       localStorage.setItem("user_id", data.user.id)
       this.handleLogin(data)
-      //console.log(data.user)
     })
   }
 
@@ -115,8 +108,6 @@ class App extends React.Component {
     fetch('http://localhost:3000/api/v1/tasks', configObj)
       .then(resp =>resp.json())
       .then(newObj => {
-        // const newArray = ({...this.state.tasks, newObj})
-        // console.log(newArray)
         this.setState({
           tasks: this.state.tasks.prepend (newObj.task),
           newTask: {
@@ -146,7 +137,6 @@ class App extends React.Component {
     .then(resp => resp.json())
     .then(newJournal => {
       let copiedArray = [...this.state.journals]
-      // let oldJournal = copiedArray.find(journal => Journal.id === newJournal.id)
       let idx = copiedArray.findIndex(journal => journal.id === newJournal.id)
       copiedArray[idx] = newJournal;
       this.setState({ journals: copiedArray });
@@ -200,12 +190,9 @@ class App extends React.Component {
         user_id: this.state.user.id
       })
     }
-    // console.log("Hi", )
     fetch('http://localhost:3000/api/v1/journals', configObj)
       .then(resp =>resp.json())
       .then(newObj => {
-        // const newArray = ({...this.state.tasks, newObj})
-        // console.log(newArray)
         this.setState({
           journals: [...this.state.journals, newObj.journal],
           newJournal: {

@@ -3,10 +3,6 @@ import React, { Component } from 'react'
 
 
 export default class UserComp extends Component {
-  // renderJournals = () => {
-  //   console.log("Render Journals")
-  //   return <Route exact path="/journal" render = {() => <JournalList user = {this.state.user}  /> } />
-  // }
 
     render() {
       const { user } = this.props

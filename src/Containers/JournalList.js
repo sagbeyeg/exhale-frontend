@@ -41,7 +41,7 @@ export default class JournalList extends Component {
 
 
   render() {
-    console.log(this.state.currentJournal)
+    // console.log(this.state.currentJournal)
     return (
       <div className ="card" style={{backgroundColor: 'rgba(0,0,0,0.2)', color:'white'}}>
         <h3 class="large-button-text">Journal Entries</h3>

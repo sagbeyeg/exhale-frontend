@@ -23,7 +23,9 @@ export default class Meditation extends Component {
                }
                <br></br>
                {this.state.tips?
-               <ol class="card tips" style={{backgroundColor: 'rgba(0,0,0,0.2)', color:'white', fontSize: '25px', textAlign: 'left', margin: '0px'}}> 
+               <ol class="card tips" style={{backgroundColor: 'rgba(0,0,0,0.2)', color:'white', fontSize: '25px', textAlign: 'left', margin: '0px'}}>
+                   <h1 style={{ textAlign: "center"}}>😊Helpful Tips Before You Start😊</h1>
+                   <br></br> 
                     <li>
                         Take a seat: Find a place to sit that feels calm and quiet to you.
                     </li>

@@ -11,6 +11,17 @@
   margin: 100px;
 }
 
+.login .card{
+  padding-bottom: 30px;
+}
+
+.slim .card {
+  margin-left: 200px;
+  margin-right: 200px;
+  padding-left: 75px;
+  padding-right: 75px;
+}
+
 .card {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* this adds the "card" effect */
   padding: 50px;

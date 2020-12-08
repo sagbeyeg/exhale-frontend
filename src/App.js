@@ -15,6 +15,7 @@ import JournalList from './Containers/JournalList'
 import TaskList from './Containers/TaskList'
 import Music from './Components/Music'
 import Yoga from './Components/Yoga'
+import Signup from './Components/Signup'
 
 class App extends React.Component {
 
@@ -213,7 +214,7 @@ class App extends React.Component {
         <div className="App">
           {/* <UserContainer api={this.state.api} /> */}
           <NavBar loggedIn={this.state.isLoggedIn} handleLogout={this.handleLogout}/>
-          <Route exact path="/" component={Home} />
+          <Route exact path="/" render={() => <Home loggedIn={this.state.isLoggedIn} /> } />
           <Route exact path="/journals" render = {() => this.state.isLoggedIn? <JournalList journals = {this.state.journals} newJournal={this.state.newJournal} journalChangeHandler={this.journalChangeHandler} journalSubmitHandler={this.journalSubmitHandler} editSubmitHandler={this.editSubmitHandler} deleteJournal={this.deleteJournal}/> : <Redirect to='/login'/> }  /> 
           <Route exact path="/tasks" render = {() => this.state.isLoggedIn? <TaskList tasks = {this.state.tasks} newTask={this.state.newTask} changeHandler={this.changeHandler} submitHandler={this.submitHandler} /> : <Redirect to='/login'/>} />
           <Route exact path="/about" component={About}  />
@@ -222,6 +223,8 @@ class App extends React.Component {
           <Route exact path="/meditation" render = {() => this.state.isLoggedIn? <Meditation/> : <Redirect to='/login'/>} />
           <Route exact path="/login" render={() => this.state.isLoggedIn? <Redirect to='/'/> : <Login loginClickHandler={this.loginClickHandler} loginSubmitHandler={this.loginSubmitHandler} />} />
           <Route exact path="/logout" render={() => <Redirect to='/login' />} />
+          <Route exact path="/signup" component={Signup} />
+
           {/* {this.state.isLoggedIn?
           <div>
           <Route exact path="/profile" render={() => <UserComp user={this.state.user} /> } />

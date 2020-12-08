@@ -1,9 +1,5 @@
 import React from 'react';
-// import {
-//   Button
-// } from "semantic-ui-react"
-// import Button from 'react-bootstrap/Button';
-// import Form from 'react-bootstrap/Form';
+import {Link} from 'react-router-dom'
 
 class Login extends React.Component {
   localSubmitHandler = (e) => {
@@ -12,7 +8,7 @@ class Login extends React.Component {
   }
   render() {
     return (
-      <div>
+      <div class="slim login">
         <form onSubmit={this.localSubmitHandler} class="card" style={{backgroundColor: 'rgba(0,0,0,0.2)', color:'white'}}>
           <h1>Login</h1>
           <div class="form-group">
@@ -22,6 +18,7 @@ class Login extends React.Component {
             <input type="password" class="form-control" name="password" placeholder="Password" onChange={this.props.loginClickHandler} />
           </div>
           <button class="btn btn-primary">Login</button> 
+          <small><h5><Link to="/signup">Sign up for Exhale</Link></h5></small>
         </form>
       </div>
     );

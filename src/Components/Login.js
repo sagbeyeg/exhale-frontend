@@ -18,7 +18,7 @@ class Login extends React.Component {
             <input type="password" class="form-control" name="password" placeholder="Password" onChange={this.props.loginClickHandler} />
           </div>
           <button class="btn btn-primary">Login</button> 
-          <small><h5><Link to="/signup">Sign up for Exhale</Link></h5></small>
+          <small><h5><Link to="/forgotpassword">Forgot your password?</Link> | <Link to="/signup">Sign up for Exhale</Link></h5></small>
         </form>
       </div>
     );

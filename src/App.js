@@ -16,6 +16,7 @@ import TaskList from './Containers/TaskList'
 import Music from './Components/Music'
 import Yoga from './Components/Yoga'
 import Signup from './Components/Signup'
+import ForgotPassword from './Components/ForgotPassword'
 
 class App extends React.Component {
 
@@ -224,6 +225,7 @@ class App extends React.Component {
           <Route exact path="/login" render={() => this.state.isLoggedIn? <Redirect to='/'/> : <Login loginClickHandler={this.loginClickHandler} loginSubmitHandler={this.loginSubmitHandler} />} />
           <Route exact path="/logout" render={() => <Redirect to='/login' />} />
           <Route exact path="/signup" component={Signup} />
+          <Route exact path="/forgotpassword" component={ForgotPassword} />
 
           {/* {this.state.isLoggedIn?
           <div>

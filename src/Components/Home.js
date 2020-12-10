@@ -12,7 +12,7 @@ class Home extends React.Component {
         <br></br>
         <h3>We're all about helping you live, and be, in the moment.</h3>
         <br></br>
-        <h3>So take a deep breath, look around...and <em><big>Exhale</big></em></h3>
+        <h3>So take a deep breath, look around...and <big><em>Exhale</em></big></h3>
       </div>
   )}
 }
